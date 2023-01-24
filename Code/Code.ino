@@ -22,7 +22,7 @@ void setup()
     Serial1.begin(115200, SERIAL_8N1, 5, 18); // For A9G Board
 
     delay(5000);
-    Serial.println("\n\n\nWelcome To Tracker  DEBUG INFORMATION"); // Serial Monitor
+    Serial.println("\nWelcome To Tracker  DEBUG INFORMATION"); // Serial Monitor
 
     // Making Radio OFF for power saving
     WiFi.mode(WIFI_OFF);              // WiFi OFF
