@@ -3,7 +3,7 @@
 #define SOS 15
 #define SLEEP_PIN 2 // Make this pin HIGH to make A9G board to go to sleep mode
 
-String SOS_NUM = "+918310659391"; // Add a number on which you want to receive call or SMS
+String SOS_NUM = "+91xxxxxxxxxx"; // Add a number on which you want to receive call or SMS
 
 int SOS_Time = 5; // Press the button 5 sec
 
