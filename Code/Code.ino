@@ -3,7 +3,7 @@
 #define SOS 15
 #define SLEEP_PIN 2 // Make this pin HIGH to make A9G board to go to sleep mode
 
-String SOS_NUM = "+91xxxxxxxxxx"; // Add a number on which you want to receive call or SMS
+String SOS_NUM = "+918310659391"; // Add a number on which you want to receive call or SMS
 
 int SOS_Time = 5; // Press the button 5 sec
 
@@ -22,7 +22,7 @@ void setup()
     Serial1.begin(115200, SERIAL_8N1, 5, 18); // For A9G Board
 
     delay(5000);
-    Serial.println("\nWelcome To Tracker  DEBUG INFORMATION"); // Serial Monitor
+    Serial.println("Welcome To Tracker DEBUG INFORMATION"); // Serial Monitor
 
     // Making Radio OFF for power saving
     WiFi.mode(WIFI_OFF);              // WiFi OFF
@@ -33,8 +33,7 @@ void setup()
     pinMode(SLEEP_PIN, OUTPUT);
 
     // Waiting for A9G to setup everything for 20 sec
-    //delay(1000);
-    delay(30000);
+    delay(20000);
 
     digitalWrite(SLEEP_PIN, LOW); // Sleep Mode OFF
     Serial.println("Wake"); // Serial Monitor
@@ -48,9 +47,9 @@ void setup()
     delay(1000);
 
     //Serial.println("GPS low power : AT+GPSLP = 2"); // Serial Monitor
-    Serial.println("GPS no low power : AT+GPSLP = 1"); // Serial Monitor
+    Serial.println("GPS no low power : AT+GPSLP = 0"); // Serial Monitor
     //Serial1.println("AT+GPSLP = 2");                // GPS low power
-    Serial1.println("AT+GPSLP = 1");                // GPS low power
+    Serial1.println("AT+GPSLP = 0");                // GPS low power
     delay(1000);
 
     Serial.println("Configuring Sleep Mode to 1 : AT+SLEEP = 1"); // Serial Monitor
@@ -87,6 +86,7 @@ void loop()
                 if (fromGSM == "SEND LOCATION\r")
                 {
                     Get_gmap_link(0);              // Send Location without Call
+                    delay(20);
                     digitalWrite(SLEEP_PIN, HIGH); // Sleep Mode ON
                     Serial.println("Slept");       // Serial Monitor
                 } 
@@ -94,6 +94,7 @@ void loop()
                 if (fromGSM == "SEND LC\r")
                 {
                     Get_gmap_link(1);              // Send Location without Call
+                    delay(20);
                     digitalWrite(SLEEP_PIN, HIGH); // Sleep Mode ON
                     Serial.println("Slept");       // Serial Monitor
                 } 
@@ -110,6 +111,7 @@ void loop()
                 {
                     Serial.println("---------CALL ENDS-------");
                     CALL_END = 1;
+                    delay(20);
                     digitalWrite(SLEEP_PIN, HIGH); // Sleep Mode ON
                     Serial.println("Slept");       // Serial Monitor
                 }
@@ -130,8 +132,11 @@ void loop()
         // read from port 0, send to port 1:
         if (Serial.available())
         {
+            //digitalWrite(SLEEP_PIN, LOW);
+            //String inByte = Serial.readStringUntil('\n');
             int inByte = Serial.read();
             Serial1.write(inByte);
+            //digitalWrite(SLEEP_PIN, HIGH);
         }
 
         // When SOS button is pressed
@@ -209,6 +214,9 @@ void Get_gmap_link(bool makeCall)
         Serial1.println((char)26);
         delay(1000);
         Serial.println("SMS Sent"); // Serial Monitor
+        Serial1.println("AT+CMGD=1,4"); // delete stored SMS to save memory
+        delay(5000);
+        Serial.println("Deleted stored SMS to save memory"); // Serial Monitor
     }
 
     else
