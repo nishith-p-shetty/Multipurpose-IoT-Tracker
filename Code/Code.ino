@@ -68,6 +68,12 @@ void setup()
     Serial1.println("AT+CPMS = \"SM\",\"ME\",\"SM\" ");                               // Preferred SMS message storage = sim memory sim
     delay(1000);
 
+    Serial1.println("AT+SNFS = 2");
+    delay(1000);
+
+    Serial1.println("AT+CLVL = 8");
+    delay(1000);
+  
     digitalWrite(SLEEP_PIN, HIGH); // Sleep Mode ON
     Serial.println("Slept");       // Serial Monitor
 }
